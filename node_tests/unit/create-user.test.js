@@ -1,9 +1,12 @@
-const express = require("express")
-const request = require("supertest")
+const supertest = require("supertest")
+const factory = require('../factories')
+
 
 describe('Testes sobre o usuário', () => {
     it('O usuário deve ser criado', async () => {
 
-        expect(200).toBe(200)
+        const UserFactory = await factory.create('User', {password: '123123'})
+
+        expect( await UserFactory.total() ).toBe(1)
     })
 })
