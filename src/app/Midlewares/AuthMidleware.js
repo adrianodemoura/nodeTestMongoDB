@@ -1,5 +1,6 @@
+require("dotenv").config({ path: ".env_" + process.env.ENVIRONMENT.toLocaleLowerCase() })
+
 const jwt = require("jsonwebtoken");
-const config = require("../../config/auth");
 const { promisify } = require("util");
 const { throws } = require("assert");
 
@@ -17,7 +18,7 @@ module.exports = async (req, res, next) => {
   const [bearer, token] = auth.split(" ");
 
   try {
-    const decoded = await promisify(jwt.verify)(token, config.secret);
+    const decoded = await promisify(jwt.verify)(token, { secret: process.env.APP_SECRET, expireIn: process.env.APP_SECRET_EXPIRE_IN } );
 
     if (!decoded) {
       throw "O Token está expirado!";

@@ -1,17 +1,16 @@
 const request = require("supertest");
 const app = require("../src/app");
-const mongoose = require("mongoose");
 
 describe("Teste Inicial", () => {
   beforeAll(async () => {
-    await mongoose.connect("mongodb://localhost/nodejs", {
+    /*await mongoose.connect("mongodb://localhost/nodejs", {
       useNewUrlParser: true,
       useUnifiedTopology: true
-    });
+    });*/
   });
 
   afterAll(async () => {
-    await mongoose.disconnect()
+    //await mongoose.disconnect()
   });
 
   test("Testa se página inicial está ok", async () => {
@@ -21,4 +20,9 @@ describe("Teste Inicial", () => {
     expect(res.status).toEqual(200);
     expect(res.body).toHaveProperty("message");
   });
+
+  test("Testa se o usuário foi incluído com sucesso", async() => {
+
+
+  })
 });

@@ -1,4 +1,4 @@
-const config = require("../../config/auth");
+require("dotenv").config({ path: ".env_" + process.env.ENVIRONMENT.toLocaleLowerCase() })
 const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -35,9 +35,7 @@ class LoginController {
         name: userExist.name,
         email: userExist.email,
       },
-      token: jwt.sign({ id: userExist._id }, config.secret, {
-        expiresIn: config.expireIn,
-      }),
+      token: jwt.sign( { id: userExist._id }, process.env.APP_SECRET, { expiresIn: process.env.APP_SECRET_EXPIRE_IN } )
     });
   }
 }
