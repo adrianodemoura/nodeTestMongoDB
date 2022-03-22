@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 
 mongoose.connect(
   `mongodb://${process.env.DB_CONNECT_PATH}`,
-  JSON.parse(process.env.DB_CONNECT_OPTIONS),
+  { "useNewUrlParser": true, "useUnifiedTopology": true },
 
   (error) => {
     if (error) throw error
