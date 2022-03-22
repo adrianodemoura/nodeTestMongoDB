@@ -47,12 +47,10 @@ class UserController {
 
     await User.create(data, (err) => {
       if (err) {
-        return res
-          .status(400)
-          .json({
-            error: true,
-            message: "Erro ao tentar inserir usuário no banco do MongoDB.",
-          });
+        return res.status(400).json({
+          error: true,
+          message: "Erro ao tentar inserir usuário no banco do MongoDB.",
+        });
       }
 
       return res
