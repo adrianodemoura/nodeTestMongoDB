@@ -1,12 +1,9 @@
 require("dotenv").config({ path: ".env_" + process.env.ENVIRONMENT.toLocaleLowerCase() })
 const mongoose = require('mongoose');
 
-//const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-  const mongooseOptions = JSON.parse(process.env.DB_CONNECT_OPTIONS)
+mongoose.connect(
 
-  mongoose.connect(
-
-    `mongodb://${process.env.DB_CONNECT_PATH}`, mongooseOptions ,
+  `mongodb://${process.env.DB_CONNECT_PATH}`, JSON.parse(process.env.DB_CONNECT_OPTIONS) ,
   
   (error) => {
     
