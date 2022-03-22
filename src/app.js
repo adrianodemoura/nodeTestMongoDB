@@ -3,8 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 
-require("./config/connection");
-
 class App {
   constructor() {
     this.app = express();

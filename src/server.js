@@ -1,7 +1,16 @@
-const app = require("./app");
+const mongoose = require('mongoose');
 
-var PORT = process.env.PORT || 8080;
+mongoose.connect(
+  "mongodb://localhost/nodejs",
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (error) => {
+    if (error) throw error
 
-app.listen(PORT, () => {
-  console.log(`App listen on port : ${PORT}`);
-});
+    const app = require("./app");
+    const PORT = process.env.PORT || 8080;
+
+    app.listen(PORT, () => {
+      console.log(`App listen on port : ${PORT}`);
+    });
+  }
+);
