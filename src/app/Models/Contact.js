@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
+const mongoose = require("mongoose")
+const mongoosePaginate = require("mongoose-paginate-v2")
 
 const Contact = new mongoose.Schema(
   {
@@ -10,8 +10,8 @@ const Contact = new mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
-Contact.plugin(mongoosePaginate);
+Contact.plugin(mongoosePaginate)
 
-module.exports = mongoose.model("Contact", Contact);
+module.exports = mongoose.model("Contact", Contact)
