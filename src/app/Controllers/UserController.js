@@ -1,65 +1,65 @@
-const User = require('../Models/User' )
-const bcrypt = require( 'bcryptjs' )
-const yup = require( 'yup' )
-const axios = require( 'axios' )
+const User = require("../Models/User");
+const bcrypt = require("bcryptjs");
+const yup = require("yup");
+const axios = require("axios");
 
 class UserController {
+  index(req, res) {
+    console.log(req.body);
+  }
 
-    index( req, res ) {
+  show(req, res) {
+    var users = ["Kaio", "Larissa", "Danver"];
 
-        console.log( req.body )
+    return res.status(200).json({
+      error: false,
+      users,
+    });
+  }
+
+  async store(req, res) {
+    let schema = yup.object().shape({
+      name: yup.string().required(),
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({
+        error: true,
+        message: "Dados inválidos",
+      });
     }
 
-    show ( req, res ) {
-
-        var users = ["Kaio", "Larissa", "Danver"]
-
-        return res.status(200).json({
-            error: false,
-            users
-        })
+    let userExist = await User.findOne({ email: req.body.email });
+    if (userExist) {
+      return res.status(400).json({
+        error: true,
+        message: `Este e-mail '${req.body.email}' já existe!`,
+        data: userExist,
+      });
     }
 
-    async store( req, res ) {
+    const { name, email, password } = req.body;
 
-        let schema = yup.object().shape({
-            name: yup.string().required(),
-            email: yup.string().email().required(),
-            password: yup.string().required()
-        });
+    const data = { name, email, password };
+    data.password = await bcrypt.hash(data.password, 8);
 
-        if (!(await schema.isValid(req.body))) {
-            return res.status(400).json(
-            {
-                error: true,
-                message: "Dados inválidos"
-            })
-        }
+    await User.create(data, (err) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({
+            error: true,
+            message: "Erro ao tentar inserir usuário no banco do MongoDB.",
+          });
+      }
 
-        let userExist = await User.findOne( {email: req.body.email} )
-        if (userExist) {
-            return res.status(400).json({
-                error: true,
-                message: `Este e-mail '${req.body.email}' já existe!`,
-                data: userExist
-            })
-        }
-        
-        const { name, email, password } = req.body
-
-        const data = { name, email, password }
-        data.password = await bcrypt.hash( data.password, 8 )
-
-        await User.create( data, (err) => {
-            if ( err ) {
-
-                return res.status( 400 ).json({error: true, message: "Erro ao tentar inserir usuário no banco do MongoDB."})
-            }
-
-            return res.status(200).json({error: false, message: "Usuário cadastrado com sucesso."})
-        })
-    }
-
+      return res
+        .status(200)
+        .json({ error: false, message: "Usuário cadastrado com sucesso." });
+    });
+  }
 }
 
-module.exports = new UserController()
+module.exports = new UserController();

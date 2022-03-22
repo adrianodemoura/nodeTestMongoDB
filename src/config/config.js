@@ -1,4 +1,3 @@
 module.exports = {
-
-    hapikey: "" // insira seu token do hubspot aqui
-}
+  hapikey: "", // insira seu token do hubspot aqui
+};
