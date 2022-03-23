@@ -1,23 +1,11 @@
 const faker = require("faker-br")
 const User = require("../../src/app/Models/User")
-require("dotenv").config({
-  path: ".env_" + process.env.ENVIRONMENT.toLocaleLowerCase(),
-})
 const mongoose = require("mongoose")
 
 describe("Testes sobre o usuário", () => {
   beforeAll(async () => {
-    await mongoose
-      .connect(`mongodb://${process.env.DB_CONNECT_PATH}`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then(
-        () => {},
-        (err) => {
-          console.log(err)
-        }
-      )
+    await require("../../connect")
+    await User.deleteMany()
   })
 
   afterAll(async () => {
@@ -33,12 +21,10 @@ describe("Testes sobre o usuário", () => {
       uf: faker.address.stateAbbr(),
     })
 
-    await UserModel.save()
-      .then((doc) => {})
-      .catch((err) => {
-        console.log(err)
-      })
+    await UserModel.save().catch((err) => {
+      console.log(err)
+    })
 
-    expect(200).toBe(200)
+    expect(await User.count()).toBe(1)
   })
 })
