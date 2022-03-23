@@ -5,6 +5,9 @@ const mongoose = require("mongoose")
 describe("Testes sobre o usuário", () => {
   beforeAll(async () => {
     await require("../../connect")
+  })
+
+  beforeEach(async ()=> {
     await User.deleteMany()
   })
 
@@ -15,7 +18,7 @@ describe("Testes sobre o usuário", () => {
   it("O usuário deve ser criado", async () => {
     const UserModel = await new User({
       name: faker.name.findName(),
-      email: faker.internet.email(),
+      //email: faker.internet.email(),
       password: faker.internet.password(),
       municipio: faker.address.city(),
       uf: faker.address.stateAbbr(),

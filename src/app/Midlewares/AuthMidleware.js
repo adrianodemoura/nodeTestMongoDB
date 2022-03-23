@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({
       error: true,
       code: 130,
-      message: "Token de autenticação não existe!",
+      message: "Token de autenticação não existe!"
     })
   }
 
