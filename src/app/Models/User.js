@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema(
     },
     uf: {
       type: String,
-      min: [3, 'The uf must to have min of the 3 characters'],
-      max: [3, 'The uf must to have max of the 3 characters'],
+      minlength: [2, 'The uf must to have min of the 2 characters'],
+      maxlength: [2, 'The uf must to have max of the 2 characters'],
     },
   },
   {
