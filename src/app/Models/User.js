@@ -7,12 +7,12 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: [true, 'The name is mandatory']
+      required: [true, 'The name is mandatory']
     },
     email: {
       type: String,
-      require: [true, 'The email is mandatory'],
-      require: true,
+      required: [true, 'The email is mandatory'],
+      required: true,
       unique: true,
       lowercase: true,
       validate: (value) => {
@@ -21,15 +21,17 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: [true, 'The password is mandatory']
+      required: [true, 'The password is mandatory']
     },
     municipio: {
       type: String,
+      min: 3,
+      max: 100
     },
     uf: {
       type: String,
-      min: 3,
-      max: 3
+      min: [3, 'The uf must to have min of the 3 characters'],
+      max: [3, 'The uf must to have max of the 3 characters'],
     },
   },
   {

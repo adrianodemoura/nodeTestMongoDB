@@ -17,15 +17,15 @@ describe("Testes sobre o usuário", () => {
 
   it("O usuário deve ser criado", async () => {
     const UserModel = await new User({
-      name: faker.name.findName(),
-      //email: faker.internet.email(),
-      password: faker.internet.password(),
-      municipio: faker.address.city(),
-      uf: faker.address.stateAbbr(),
+        name: faker.name.findName()
+      , email: faker.internet.email()
+      , password: faker.internet.password()
+      , municipio: faker.address.city()
+      , uf: faker.address.stateAbbr()
     })
 
     await UserModel.save().catch((err) => {
-      console.log(err)
+      console.log(err.message)
     })
 
     expect(await User.count()).toBe(1)
