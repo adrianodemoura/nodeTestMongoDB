@@ -6,36 +6,38 @@ const jwt = require("jsonwebtoken")
 const userSchema = new mongoose.Schema(
   {
     name: {
-      type: String,
-      required: [true, 'The name is mandatory']
+        type: String
+      , required: [true, 'The name is mandatory']
     },
     email: {
-      type: String,
-      required: [true, 'The email is mandatory'],
-      required: true,
-      unique: true,
-      lowercase: true,
-      validate: (value) => {
+        type: String
+      , required: [true, 'The email is mandatory']
+      , required: true
+      , unique: true
+      , lowercase: true
+      , validate: (value) => {
         return validator.isEmail(value)
-      },
+      }
     },
     password: {
-      type: String,
-      required: [true, 'The password is mandatory']
+        type: String
+      , required: [true, 'The password is mandatory']
+      , minLength: [6, 'The password must to have min of the 6 characters']
+      , maxLength: [20, 'The password must to have max of the 20 characters']
     },
     municipio: {
-      type: String,
-      min: 3,
-      max: 100
+        type: String
+      , minLength: [3, 'The municipio must to have min of the 3 characters']
+      , maxLength: [100, 'The municipio must to have max of the 100 characters']
     },
     uf: {
-      type: String,
-      minlength: [2, 'The uf must to have min of the 2 characters'],
-      maxlength: [2, 'The uf must to have max of the 2 characters'],
+        type: String
+      , minLength: [2, 'The uf must to have min of the 2 characters']
+      , maxLength: [2, 'The uf must to have max of the 2 characters']
     },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 )
 

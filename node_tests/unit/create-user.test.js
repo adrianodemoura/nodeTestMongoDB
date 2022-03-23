@@ -24,10 +24,26 @@ describe("Testes sobre o usuário", () => {
       , uf: faker.address.stateAbbr()
     })
 
-    await UserModel.save().catch((err) => {
-      console.log(err.message)
+    const UserValidate = await UserModel.validateSync()
+    await UserModel.save()
+
+    expect( UserValidate ).toBe(undefined)
+    expect( await User.count() ).toBe(1)
+  })
+
+  it("A inclusão do usuário dever falhar porque não tem senha", async() => {
+    const UserModel = await new User({
+        name: faker.name.findName()
+      , email: faker.internet.email()
+      , municipio: faker.address.city()
+      , uf: faker.address.stateAbbr()
     })
 
-    expect(await User.count()).toBe(1)
+    const UserValidate = await UserModel.validateSync()
+    try { await UserModel.save() } catch (err) { }
+
+    expect( await User.count() ).toBe(0)
+    expect( !!UserValidate.message ).toBe(true)
+    expect( UserValidate.message ).toBe('User validation failed: password: The password is mandatory')
   })
 })
